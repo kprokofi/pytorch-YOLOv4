@@ -241,6 +241,7 @@ class Yolo_loss(nn.Module):
 
             output = output.view(batchsize, self.n_anchors, n_ch, fsize, fsize)
             output = output.permute(0, 1, 3, 4, 2)  # .contiguous()
+            output[output!=output] = 0
             output = output.clamp(0, 1)
 
             # logistic activation for xy, obj, cls
