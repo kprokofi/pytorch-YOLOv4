@@ -233,7 +233,6 @@ class Yolo_loss(nn.Module):
         return obj_mask, tgt_mask, tgt_scale, target
 
     def forward(self, xin, labels=None):
-        print(labels)
         loss, loss_xy, loss_wh, loss_obj, loss_cls, loss_l2 = 0, 0, 0, 0, 0, 0
         for output_id, output in enumerate(xin):
             batchsize = output.shape[0]
@@ -263,8 +262,7 @@ class Yolo_loss(nn.Module):
             target[..., 4] *= obj_mask
             target[..., np.r_[0:4, 5:n_ch]] *= tgt_mask
             target[..., 2:4] *= tgt_scale
-            
-            print(output, target)
+
 
             loss_xy += F.binary_cross_entropy(input=output[..., :2], target=target[..., :2],
                                               weight=tgt_scale * tgt_scale, reduction='sum')
