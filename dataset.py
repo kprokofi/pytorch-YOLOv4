@@ -256,9 +256,9 @@ class Yolo_dataset(Dataset):
         f = open(label_path, 'r', encoding='utf-8')
         for line in f.readlines():
             data = line.split(" ")
-            truth[data[0]] = []
+            truth[data[0].strip()] = []
             for i in data[1:]:
-                truth[data[0]].append([int(float(j)) for j in i.split(',')])
+                truth[data[0]].append([int(float(j.strip())) for j in i.split(',')])
 
         self.truth = truth
         self.imgs = list(self.truth.keys())
