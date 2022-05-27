@@ -241,6 +241,7 @@ class Yolo_loss(nn.Module):
 
             output = output.view(batchsize, self.n_anchors, n_ch, fsize, fsize)
             output = output.permute(0, 1, 3, 4, 2)  # .contiguous()
+            output = output.clamp(0, 1)
 
             # logistic activation for xy, obj, cls
             output[..., np.r_[:2, 4:n_ch]] = torch.sigmoid(output[..., np.r_[:2, 4:n_ch]])
